@@ -1,0 +1,40 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<pthread.h>
+void *func(void *arg)
+{
+        int input;
+        k=*((int*)arg);              
+        printf("The prime numbes under %d are: ", input);
+        for(int i=2;i<=k;i++)
+        {
+                int c=0;
+                for(int j=2;j<=i/2;j++)
+                {
+                        if(i%j==0)
+                        {
+                                c++;
+                        }
+                }
+                if(c<1)
+                {
+                        printf("%d  ",i);
+                }
+                else if(k==2)
+                { 
+				                                                                                                                                                                                                                         printf("%d  ", input);                                                                                                                                                                                       }
+        }
+        printf("\n\n");
+        pthread_exit(NULL);
+}
+int main()
+{
+        pthread_t p;
+        int n;
+        printf("Enter Number: ");
+        scanf("%d",&n);
+        printf("Passing the number to thread:-\n\n");
+        pthread_create(&p,NULL,func(void *),&n);
+        pthread_join(p,NULL);
+        return 0;
+}
