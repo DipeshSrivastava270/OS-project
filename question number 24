@@ -1,0 +1,116 @@
+#include<stdio.h>
+int main()
+{
+    int pro;                  
+    int res;                  
+    printf("Enter the type of resources used: ");
+    scanf("%d",&res);
+    printf("Enter the number of processes: ");
+    scanf("%d",&pro);
+    
+    int available[res];                           
+    int max[pro][res];                           
+    int req[pro][res];                         
+    int alloc[pro][res];                          
+
+    //Input of availble resources
+    printf("Enter the available resources for each resourse type: \n");
+    char st=65;
+    for(int i=0;i<res;i++)
+    {
+        printf("%c: ",st);
+        scanf("%d",&available[i]);
+        st++;
+    }
+
+    //input of maximum resources required
+    printf("\n\n Enter the maximum demand for each process:\n");
+    for(int i=0;i<pro;i++)
+    {
+        printf("Enter the max demand for process P%d : ",i+1);
+        st=65;
+        for(int j=0;j<res;j++)
+        {
+            scanf("%d",&max[i][j]);
+        }
+    }
+
+    //input of already allocated resources
+    printf("\n\n enter the number of resources that have been currently allocated...\n");
+    for(int i=0;i<pro;i++)
+    {
+    	printf("Enter the number of resources of allocated to process P%d : ",i+1);
+        st=65;
+        for(int j=0;j<res;j++)
+        {
+            scanf("%d",&alloc[i][j]);
+        }
+	}
+    //calculation of needed resources for each process
+    for(int i=0;i<pro;i++)
+    {
+        for(int j=0;j<res;j++)
+        {
+            req[i][j]=max[i][j]-alloc[i][j];
+        }
+    }
+
+   
+    int full[pro];              
+    int safe[pro];            
+    int ind=0;
+    for(int i=0;i<pro;i++)
+    {
+        f[i]=0;
+    }
+    for (int k=0;k<pro;k++)
+    {
+        for (int i=0;i<pro;i++)
+        {
+            if (f[i]==0)
+            {
+                int flag = 0;
+                for (int j = 0; j < res; j++)
+                {
+                	if (req[i][j] > [j])
+                    {
+                        flag = 1;
+                        break;
+                    }
+                }
+                if (flag == 0)
+                {
+                	safe[ind++] = i;
+                	for (int y = 0; y < res; y++)
+                	{
+                	available[y] += alloc[i][y];
+					}
+                	f[i] = 1;
+                }
+            }
+        }
+    }
+    int not_safe=0;
+    for(int i=0;i<pro;i++)
+    {
+        if(f[i]==0)
+        {
+        	not_safe++;
+        }
+    }
+    if(not_safe==0)
+    {
+        printf("\nThe given values have a safe sequence...\n");
+        printf("The SAFE Sequence is: ");
+        for (int i=0;i<pro-1; i++)
+        {
+            printf("P%d ->",safe[i]);
+        }
+        printf("P%d\n",ans[pro-1]);
+    }
+    else
+    {
+        printf("\nThe given values don't have a safe sequence.");
+    }
+    return 0;
+}
